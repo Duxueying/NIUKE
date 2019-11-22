@@ -1,0 +1,12 @@
+import java.util.*;
+public class UnusualAdd {
+    public int addAB(int A, int B) {
+        while(B!=0){
+            int sum=A^B;
+            int n=(A&B)<<1;
+            B=n;
+            A=sum;
+        }
+        return A;
+    }
+}
