@@ -1,0 +1,56 @@
+public class Main {
+   
+    public static void main(String[] args) throws IOException {
+   
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int num = Integer.parseInt(bufferedReader.readLine());
+        int[][] jimu = new int[num][2];
+        for (int i = 0; i < num; i++){
+            String[] temp = bufferedReader.readLine().split(" ");
+            jimu[i][0] = Integer.parseInt(temp[0]);
+            jimu[i][1] = Integer.parseInt(temp[1]);
+        }
+        Arrays.sort(jimu, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] != o2[0]? o1[0] - o2[0] : o1[1] - o2[1];
+            }
+        });
+        if( num == 1){
+            System.out.print(1);
+            return;
+        }
+        //dp[i] 存放最大非递减子序列长度为i的元素,这样就保证了对dp进行而分时，
+        // dp[]是非递减的,因为dp[i+1]肯定是大于等于dp[i]的元素
+        int[] dp = new int[num];
+        dp[0] = jimu[0][1];
+        int len = 1;
+        //求最长递归子序列
+        for (int i = 1; i < num; i++){
+            if(jimu[i][1] >= dp[len - 1]){
+                dp[len++] = jimu[i][1];
+            }else{
+                int index = binarySearch(dp, jimu[i][1], len);
+                dp[index] = jimu[i][1];
+            }
+        }
+        System.out.print(len);
+    }
+    //寻找最小大于key的数的索引
+    public static int binarySearch(int[] dp, int key, int len){
+        int start = 0;
+        int end = len - 1;
+        int mid;
+        int maxIndex = 0;
+        while(start <= end){
+            mid = start + (end - start) / 2;
+            if(key > dp[mid]){
+                start = mid + 1;
+            }else{
+                end = mid - 1;
+                maxIndex = mid;
+            }
+        }
+        return maxIndex;
+    }
+}
