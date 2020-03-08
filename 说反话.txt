@@ -1,0 +1,25 @@
+import java.io.IOException;  
+import java.text.ParseException;  
+import java.util.Scanner;  
+public class Main {  
+  public static void main(String[] args) throws ParseException, IOException {  
+
+    Scanner scanner = new Scanner(System.in);  
+    //输入一组单词,去除掉前后空格  
+    String str = scanner.nextLine().trim();  
+
+    //去除掉单词间的空格,可能不只有一个空格，因此用" +"表示至少一个空格  
+    String[] strs = str.split(" +");  
+    for(int i=strs.length-1;i>=0;--i)  
+    {  
+
+        System.out.print(strs[i]);  
+        if(i!=0)  
+          System.out.print(" ");  
+
+      //不是最后一个单词，就输出一个空格  
+
+    }  
+
+  }  
+}
